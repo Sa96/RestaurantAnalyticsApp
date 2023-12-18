@@ -1,0 +1,244 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&dsplay=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: #25272e;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Box {
+    position: relative;
+    width: 500px;
+    height: 550px;
+    background: #191a1f;
+    overflow: hidden;
+}
+
+    .Box::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 450px;
+        height: 500px;
+        background: linear-gradient(90deg,transparent,#00ffff,#00ffff);
+        transform-origin: bottom-right;
+        animation: animate 6s linear infinite;
+    }
+
+    .Box::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 450px;
+        height: 500px;
+        background: linear-gradient(90deg,transparent,#fa008a,#fa008a);
+        transform-origin: bottom-right;
+        animation: animate 6s linear infinite;
+        animation-delay: -3s;
+    }
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+form {
+    position: absolute;
+    inset: 1px;
+    background: #28292d;
+    z-index: 10;
+    padding: 20px 35px;
+    border-radius: 55px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    color: #00ffff;
+    font-size: 2.3em;
+    font-weight: 500;
+    text-align: center;
+}
+
+.inputBox {
+    position: relative;
+    width: 300px;
+    margin-top: 40px;
+}
+
+    .inputBox input {
+        position: relative;
+        width: 100%;
+        padding: 18px 35px 5px 0;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        border-bottom: 1px solid #87a4bd;
+        color: #00ffff;
+        font-size: 1.1em;
+        font-weight: 400;
+        letter-spacing: 0.07em;
+        background: linear-gradient(to top, #00ffff 50%, #00ffff 50%);
+        background-position: left bottom;
+        background-size: 0 1px;
+        background-repeat: no-repeat;
+        transition: all 0.5s ease-in-out;
+    }
+
+        .inputBox input:hover,
+        .inputBox input:focus,
+        .inputBox input:valid {
+            border-color: #00ffff;
+        }
+
+        .inputBox input:focus {
+            background-position: left bottom;
+            background-color: 100% 1px;
+        }
+
+    .inputBox label {
+        position: absolute;
+        left: 0;
+        padding: 20px 0;
+        color: #87a4bd;
+        font-size: 1em;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        pointer-events: none;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .inputBox ion-icon {
+        position: absolute;
+        color: #87a4bd;
+        right: 0;
+        top: 20px;
+        font-size: 1.3em;
+        transition: 0.5s;
+    }
+
+    .inputBox input:focus ~ label,
+    .inputBox input:valid ~ label {
+        top: -20px;
+        color: #00ffff;
+        transform: translateY(-25px);
+        font-size: 0.8em;
+    }
+
+    .inputBox input:focus ~ ion-icon,
+    .inputBox input:valid ~ ion-icon {
+        color: #00ffff;
+        transform: scale(1.1);
+    }
+
+.Forget {
+    width: 300px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .Forget input {
+        display: none;
+        cursor: pointer;
+    }
+
+    .Forget label {
+        position: relative;
+        cursor: pointer;
+        color: #87a4bd;
+        font-size: 0.9em;
+    }
+
+        .Forget label::before {
+            content: "";
+            border: 2px solid #00ffff;
+            padding: 8px;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+    .Forget .input:checked + label::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 7px;
+        width: 5px;
+        height: 12px;
+        border: solid #00ffff;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+
+    .Forget .input:checked ~ label {
+        color: #00ffff
+    }
+
+    .Forget a {
+        color: #87a4bd;
+        font-size: 0.9em;
+        text-decoration: none;
+    }
+
+        .Forget a:hover {
+            color: #00ffff;
+            text-decoration: underline;
+            text-underline-offset: 5px;
+        }
+
+input[type="submit"] {
+    margin-top: 50px;
+    width: 300px;
+    padding: 5px;
+    font-size: 22px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background-color: #00ffff;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    transition: all 0.5s ease-in;
+}
+
+input[type=submit]:hover {
+    border-radius: 50px;
+    letter-spacing: 0.15em;
+}
+
+.register {
+    color: #87a4bd;
+    margin: 40px;
+    font-size: 1em;
+    text-align: center;
+}
+
+    .register a {
+        color: #00ffff;
+        padding-left: 3px;
+        text-decoration: none;
+    }
+
+        .register a:hover {
+            text-decoration: underline 2px;
+            text-underline-offset: 5px;
+        }

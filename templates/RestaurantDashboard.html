@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=content-width initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='RestaurantDashboard.css') }}"/>
+    <title>Restaurant Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <div class="topbar">
+                <div class="user">
+                    <a href="{{ url_for('logout') }}"><ion-icon name="person-circle-outline"></ion-icon></a>
+                </div>
+            </div>
+            <div>
+                <form action="{{ url_for('dashboard') }}" method="POST" autocomplete="on">
+                    <iframe title="Restaurant Analytics Dashboard" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=c1e42270-6277-4fb5-af45-ac7b4c9b5855&autoAuth=true&ctid=94742acf-d141-4c42-8ac2-2747fa827016" frameborder="0" allowFullScreen="true"></iframe>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

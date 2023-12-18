@@ -1,0 +1,86 @@
+{% block midpart %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie-edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}" />
+    <script src="https://microsoft.github.io/PowerBI-JavaScript/demo/node_modules/powerbi-client/dist/powerbi.js"></script>
+</head>
+<body>
+    <div class="Box">
+        <form action="{{ url_for('login') }}" method="post" autocomplete="off">
+            {{ csrf_token }}
+            <h2>Login</h2>
+            <div class="inputBox">
+                <label for="Email"></label>
+                <input type="Email" name="Email" id="id_Email" placeholder="Email" autocomplete="on">
+                <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="inputBox">
+                <label for="Password"></label>
+                <input type="password" name="Password" id="id_Password" placeholder="Password" autocomplete="on">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+            </div>
+            <div class="Forget">
+                <input type="checkbox" id="id_Checkbox">
+                <label for="id_Checkbox">Remember Me</label>
+                <a href="{{ url_for('forget_password') }}">Forget password?</a>
+            </div>
+            <input type="submit" value="login" id="loginButton">
+            <div class="register">
+                <p>
+                    if you don't have an account.<a id="CreateAccountLink" href="{{ url_for('create_account') }}">SignUp</a>
+                </p>
+            </div>
+        </form>
+    </div>
+    <div id="powerBiContainer" style="height: 600px;"></div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        const loginButton = document.getElementById('loginButton');
+        loginButton.addEventListener("click", () => {
+            const Email = document.getElementById("id_Email").value;
+            const password = document.getElementById("id_Password").value;
+            // Add your login validation logic here
+            if (Email === "your_username" && password === "your_password") {
+                // Login successful
+                showPowerBidashboard();
+                alert("Login successful!");
+                // Redirect to a new page or perform other actions
+            } else {
+                alert("Login failed. Please check your credentials.");
+            }
+        });
+
+        const CreateAccountLink = document.getElementById("CreateAccountLink");
+        CreateAccountLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            window.location.href = CreateAccountLink.getAttribute('href');
+            alert("Redirect to create account page");
+        });
+    </script>
+    <script>
+        function showPowerBidashboard() {
+            const embedContainer = document.getElementById('powerBiContainer');
+            const config = {
+                type: 'dashboard',
+                id: 'c1e42270-6277-4fb5-af45-ac7b4c9b5855',
+                embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=c1e42270-6277-4fb5-af45-ac7b4c9b5855&autoAuth=true&ctid=94742acf-d141-4c42-8ac2-2747fa827016',
+                accessToken: true,
+                tokenType: models.TokenType.Embed,
+                settings: {
+                    filterPaneEnabled: false,
+                    navContentPaneEnabled: false
+                }
+            };
+            const powerBiDashboard = powerbi.embed(embedContainer, config);
+        }
+    </script>
+</body>
+</html>
+{% endblock midpart %}

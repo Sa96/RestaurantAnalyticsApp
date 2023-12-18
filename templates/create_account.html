@@ -1,0 +1,66 @@
+{% block midpart %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie-edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='create_account.css') }}"/>
+</head>
+<body>
+    <div class="Box">
+        <form action="{{ url_for('create_account') }}" method="post" autocomplete="on">
+            {{ csrf_token }}
+            <h2>Create Account</h2>
+            <div class="inputBox">
+                <label for="Username"></label>
+                <input type="text" name="Username" id="id_Username" placeholder="Username" autocomplete="on">
+                <ion-icon name="person-outline"></ion-icon>
+            </div>
+            <div class="inputBox">
+                <label for="Email"></label>
+                <input type="email" name="Email" id="id_Email" placeholder="Email" autocomplete="on">
+                <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="inputBox">
+                <label for="Password"></label>
+                <input type="password" name="Password" id="id_Password" placeholder="Password" autocomplete="on">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+            </div>
+            <input type="submit" id="CreateAccountButton" value="Register">
+            <div class="register">
+            <p>Already have an account.<a id='LoginLink' href="{{ url_for('index') }}">login</a></p>
+        </div>
+    </form>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        const loginButton = document.getElementById('CreateAccountButton');
+        loginButton.addEventListener("click", () => {
+            const username = document.getElementById("id_Username").value;
+            const password = document.getElementById("id_Password").value;
+            const confirm_password = document.getElementById("id_ConfirmPassword").value;
+            const email = document.getElementById("id_Email").value;
+            // Add your login validation logic here
+            if (username === "your_username" && password === "your_password" && email === "your email" && confirm_password === "confirm_password") {
+                // Login successful
+                alert("Account created successful!");
+                // Redirect to a new page or perform other actions
+            } else {
+                alert("Please check your credentials.");
+            }
+        });
+
+        const LoginLink = document.getElementById("LoginLink");
+        LoginLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            window.location.href = LoginLink.getAttribute('href');
+            alert("Redirect to Login page");
+        });
+    </script>
+</body>
+</html>
+{% endblock midpart %}
