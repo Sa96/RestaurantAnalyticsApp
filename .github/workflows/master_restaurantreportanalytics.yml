@@ -64,4 +64,4 @@ jobs:
         with:
           app-name: 'RestaurantReportAnalytics'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_40C0BBA83BD54F3F9D48F891ABD4A0DA }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0D6D3F47CE9149379BED4EFAEB6353DE }}
