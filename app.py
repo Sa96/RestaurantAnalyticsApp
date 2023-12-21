@@ -9,6 +9,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import bcrypt
 
+client_id = "291d6289-7fb0-4a47-9aa4-e06d7a1fc17c"
+client_secret = "dd8fff64-ca03-4af8-8909-43d89cf2985d"
+redirect_uri = "https://restaurantanalytics.azurewebsites.net"
+authority_url = 'https://login.microsoftonline.com/common'
+
+
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -65,8 +71,17 @@ def login():
         user = User.query.filter_by(email=Email).first()
         
         if user and user.check_password(Password):
-            session['email'] = user.email
-            return redirect('/dashboard')
+            # Assuming the user is successfully authenticated, redirect to the Power BI authorization URL
+            authorization_url = (
+                f"{authority_url}/oauth2/v2.0/authorize?"
+                f"client_id={client_id}"
+                f"&redirect_uri={redirect_uri}"
+                "&response_type=code"
+                "&scope=https://graph.microsoft.com/.default"
+            )
+            return redirect(authorization_url)
+
+        # If authentication fails, render the login page again
         return render_template('RestaurantDashboard.html')
         
 
