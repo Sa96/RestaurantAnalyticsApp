@@ -13,6 +13,8 @@ client_id = "291d6289-7fb0-4a47-9aa4-e06d7a1fc17c"
 client_secret = "dd8fff64-ca03-4af8-8909-43d89cf2985d"
 redirect_uri = "https://restaurantanalytics.azurewebsites.net"
 authority_url = 'https://login.microsoftonline.com/common'
+pbiusername='Sanjay@gindouae2023.onmicrosoft.com'
+pbipassword='GIndouae2023@%$'
 
 
 app = Flask(__name__)
@@ -78,6 +80,8 @@ def login():
                 f"&redirect_uri={redirect_uri}"
                 "&response_type=code"
                 "&scope=https://graph.microsoft.com/.default"
+                f"{pbiusername}"
+                f"{pbipassword}"
             )
             return redirect(authorization_url)
 
