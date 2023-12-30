@@ -10,19 +10,18 @@
     <title>Restaurant Dashboard</title>
 </head>
 <body>
-    <div class="container">
-        <div class="main">
-            <div class="topbar">
-                <div class="user">
-                    <a href="{{ url_for('logout') }}"><ion-icon name="person-circle-outline"></ion-icon></a>
-                </div>
-            </div>
-            <div>
-                <form action="{{ url_for('dashboard') }}" method="POST" autocomplete="on">
-                    <iframe title="Restaurant Analytics Dashboard" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=c1e42270-6277-4fb5-af45-ac7b4c9b5855&autoAuth=true&ctid=94742acf-d141-4c42-8ac2-2747fa827016" frameborder="0" allowFullScreen="true"></iframe>                </form>
+    <div class="main">
+        <div class="topbar">
+            <div class="user">
+                <a href="{{ url_for('logout') }}"><ion-icon name="person-circle-outline"></ion-icon></a>
             </div>
         </div>
+        <div class="powerBIContainer">
+            <form action="{{ url_for('dashboard') }}" method="POST" autocomplete="on">
+                <iframe title="Creativa Report Ver 3.2" width="1250" height="550" src="https://app.powerbi.com/reportEmbed?reportId=dda3cb1c-7400-4408-b480-aeaecda0bc7a&autoAuth=true&ctid=c8897d5d-3b8f-41cb-8f4c-aa3adf059bfd" frameborder="0" allowFullScreen="true"></iframe>            </form>
+       </div>
     </div>
+    <script src="https://microsoft.github.io/PowerBI-JavaScript/assets/iframeEmbed.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

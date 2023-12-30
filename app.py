@@ -13,14 +13,15 @@ client_id = "291d6289-7fb0-4a47-9aa4-e06d7a1fc17c"
 client_secret = "dd8fff64-ca03-4af8-8909-43d89cf2985d"
 redirect_uri = "https://restaurantanalytics.azurewebsites.net"
 authority_url = 'https://login.microsoftonline.com/common'
-pbiusername='Sanjay@gindouae2023.onmicrosoft.com'
-pbipassword='GIndouae2023@%$'
+pbiusername='info@ngtechuae.com'
+pbipassword='Info@Ngtech'
 
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.secret_key = 'secret_key'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = 'your_secret_key'
 app.config['SECURITY_PASSWORD_HASH'] = 'bcrypt'
 app.config['SECURITY_PASSWORD_SALT'] = b'$2b$12$wqKlYjmOfXPghx3FuC3Pu.'
 
@@ -62,19 +63,7 @@ mail = Mail(app)
 
 @app.route('/')
 def index():
-    return render_template('login.html')
-
-@app.route('/login', methods=['POST'])
-def login():
-    if request.method == 'POST':
-        Email = request.form['Email']
-        Password = request.form['Password']
-        
-        user = User.query.filter_by(email=Email).first()
-        
-        if user and user.check_password(Password):
-            # Assuming the user is successfully authenticated, redirect to the Power BI authorization URL
-            authorization_url = (
+    authorization_url = (
                 f"{authority_url}/oauth2/v2.0/authorize?"
                 f"client_id={client_id}"
                 f"&redirect_uri={redirect_uri}"
@@ -83,10 +72,24 @@ def login():
                 f"{pbiusername}"
                 f"{pbipassword}"
             )
-            return redirect(authorization_url)
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['User']
+        password = request.form['Password']
+
+        user = User.query.filter_by(username=username).first()
+
+        if user and user.check_password(password):
+            # Assuming the user is successfully authenticated, redirect to the Power BI authorization URL
+            session['email'] = user.email
+            return redirect('/dashboard')
+        return render_template('RestaurantDashboard.html')    
 
         # If authentication fails, render the login page again
-        return render_template('RestaurantDashboard.html')
+    return render_template('RestaurantDashboard.html')
         
 
 @app.route('/dashboard')

@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\instance",
-    "\\static"
+    "\\flask_session",
+    "\\static",
+    "\\templates"
   ],
   "SelectedNode": "\\app.py",
   "PreviewInSolutionExplorer": false

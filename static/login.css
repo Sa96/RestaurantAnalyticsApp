@@ -8,7 +8,7 @@
 }
 
 body {
-    background: #25272e;
+    background: #fff;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -19,7 +19,7 @@ body {
     position: relative;
     width: 450px;
     height: 500px;
-    background: #191a1f;
+    background: #fff;
     overflow: hidden;
 }
 
@@ -30,7 +30,7 @@ body {
         left: -50%;
         width: 400px;
         height: 500px;
-        background: linear-gradient(90deg,transparent,#00ffff,#00ffff);
+        background: linear-gradient(90deg,transparent,#fff,#fff);
         transform-origin: bottom-right;
         animation: animate 6s linear infinite;
     }
@@ -105,7 +105,7 @@ h2 {
         .inputBox input:hover,
         .inputBox input:focus,
         .inputBox input:valid {
-            border-color: #00ffff;
+            border-color: #fff;
         }
 
         .inputBox input:focus {
@@ -137,7 +137,7 @@ h2 {
     .inputBox input:focus ~ label,
     .inputBox input:valid ~ label {
         top: -20px;
-        color: #00ffff;
+        color: #fff;
         transform: translateY(-25px);
         font-size: 0.8em;
     }
