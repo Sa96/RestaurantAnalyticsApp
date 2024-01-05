@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie-edge">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
         <title>login</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"/>
     </head>
     <body>
         <div class="Box">
@@ -14,12 +14,12 @@
                 <h2>Login</h2>
                 <div class="inputBox">
                     <label for="Username">Username</label>
-                    <input type="text" name="User" id="id_Username" autocomplete="on" >
+                    <input type="text" name="username" id="id_Username" autocomplete="on" >
                     <ion-icon name="person-outline"></ion-icon>
                 </div>
                 <div class="inputBox">
                     <label for="Password">Password</label>
-                    <input type="password" name="Password" id="id_Password" autocomplete="on">
+                    <input type="password" name="password" id="id_Password" autocomplete="on">
                     <ion-icon name="lock-closed-outline"></ion-icon>
                 </div>
                 <div class="Forget">
@@ -27,7 +27,7 @@
                     <label for="id_Checkbox">Remember Me</label>
                     <a href="{{ url_for('forget_password') }}">Forget password?</a>
                 </div>
-                <input type="submit" value="submit" id="loginButton">
+                <input type="submit" value="submit" id="loginButton" onclick="LoginUserForm();">
                 <div class="register">
                     <p>
                         if you don't have an account.<a id="CreateAccountLink" href="{{ url_for('create_account') }}">SignUp</a>
@@ -37,27 +37,6 @@
         </div>
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-        <script>
-            const loginButton = document.getElementById('loginButton');
-            loginButton.addEventListener("click", () => {
-                const username = document.getElementById("id_Username").value;
-                const password = document.getElementById("id_Password").value;
-                // Add your login validation logic here
-            if (username === "your_username" && password === "your_password") {
-                // Login successful
-                alert("Login successful!");
-                // Redirect to a new page or perform other actions
-            } else {
-                alert("Login failed. Please check your credentials.");
-            } 
-        });
-
-        const CreateAccountLink = document.getElementById("CreateAccountLink");
-        CreateAccountLink.addEventListener("click", (event) => {
-            event.preventDefault();
-            window.location.href = CreateAccountLink.getAttribute('href');
-            alert("Redirect to create account page");
-        });
-        </script>
+        <script src="{{url_for('static', filename='js/login.js')}}"></script>
     </body>
 </html>

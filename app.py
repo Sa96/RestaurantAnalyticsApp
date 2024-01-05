@@ -19,7 +19,7 @@ pbiusername='info@ngtechuae.com'
 pbipassword='Info@Ngtech'
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -76,8 +76,6 @@ def login():
     # Initialize connection and cursor
     connection = pyodbc.connect("DRIVER={ODBC Driver 17 for SQL SERVER};SERVER=68.178.163.254\\SQLEXPRESS;DATABASE=PBI_Dashboard_DB;UID=sa;PWD=Ngtech@2021")
     cursor = connection.cursor()
-    print("Database is connected. here is the connection : ", cursor, sep='\n')
-
     query = "SELECT * FROM dbo.Users WHERE username = ? AND password = ?"
     result = cursor.execute(query, (username, password)).fetchone()
 

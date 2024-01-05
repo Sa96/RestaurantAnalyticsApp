@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=content-width initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='RestaurantDashboard.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/RestaurantDashboard.css') }}"/>
     <title>Restaurant Dashboard</title>
 </head>
 <body>
@@ -16,13 +16,33 @@
                 <a href="{{ url_for('logout') }}"><ion-icon name="person-circle-outline"></ion-icon></a>
             </div>
         </div>
-        <div class="powerBIContainer">
+        <div class="powerBIContainer" id="reportContainer">
             <form action="{{ url_for('dashboard') }}" method="POST" autocomplete="on">
-                <iframe title="Creativa Report Ver 3.2" width="1250" height="550" src="https://app.powerbi.com/reportEmbed?reportId=dda3cb1c-7400-4408-b480-aeaecda0bc7a&autoAuth=true&ctid=c8897d5d-3b8f-41cb-8f4c-aa3adf059bfd" frameborder="0" allowFullScreen="true"></iframe>            </form>
+                <iframe title="Creativa Report Ver 3.2" width="1250" height="550" src="https://app.powerbi.com/reportEmbed?reportId=dda3cb1c-7400-4408-b480-aeaecda0bc7a&autoAuth=true&ctid=c8897d5d-3b8f-41cb-8f4c-aa3adf059bfd" frameborder="0" allowFullScreen="true"></iframe>            
+            </form>
        </div>
     </div>
     <script src="https://microsoft.github.io/PowerBI-JavaScript/assets/iframeEmbed.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="text/javascript">
+        // Replace this code with your Power BI embedding code using the embed token
+        var embedConfig = {
+            type: 'report',
+            report_id: 'e69c9f15-b04d-47b5-a808-e21e346ff958',
+            workspace_id: 'c1e42270-6277-4fb5-af45-ac7b4c9b5855',
+            embedUrl: 'https://app.powerbi.com/reportEmbed?reportId={{report_id}}&autoAuth=true&ctid={{workspace_id}}',
+            tokenType: models.TokenType.Embed,
+            accessToken: '{{ embed_token }}', // Use Flask template syntax to inject the embed token
+            settings: {
+                filterPaneEnabled: false,
+                navContentPaneEnabled: false
+            }
+        };
+
+        var reportContainer = document.getElementById('reportContainer').value;
+        var report = powerbi.embed(reportContainer, embedConfig);
+        console.log("Console Report : ", report);
+    </script>
 </body>
 </html>
