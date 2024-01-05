@@ -8,6 +8,8 @@ from flask_admin.contrib.sqla import ModelView
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import bcrypt
+import pyodbc
+from powerbiclient import Report,models
 
 client_id = "291d6289-7fb0-4a47-9aa4-e06d7a1fc17c"
 client_secret = "dd8fff64-ca03-4af8-8909-43d89cf2985d"
@@ -63,41 +65,72 @@ mail = Mail(app)
 
 @app.route('/')
 def index():
-    authorization_url = (
-                f"{authority_url}/oauth2/v2.0/authorize?"
-                f"client_id={client_id}"
-                f"&redirect_uri={redirect_uri}"
-                "&response_type=code"
-                "&scope=https://graph.microsoft.com/.default"
-                f"{pbiusername}"
-                f"{pbipassword}"
-            )
     return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form['User']
-        password = request.form['Password']
+    # Handle login form submission
+    username = request.form.get('username')
+    password = request.form.get('password')
 
-        user = User.query.filter_by(username=username).first()
+    # Initialize connection and cursor
+    connection = pyodbc.connect("DRIVER={ODBC Driver 17 for SQL SERVER};SERVER=68.178.163.254\\SQLEXPRESS;DATABASE=PBI_Dashboard_DB;UID=sa;PWD=Ngtech@2021")
+    cursor = connection.cursor()
+    print("Database is connected. here is the connection : ", cursor, sep='\n')
 
-        if user and user.check_password(password):
-            # Assuming the user is successfully authenticated, redirect to the Power BI authorization URL
-            session['email'] = user.email
-            return redirect('/dashboard')
-        return render_template('RestaurantDashboard.html')    
+    query = "SELECT * FROM dbo.Users WHERE username = ? AND password = ?"
+    result = cursor.execute(query, (username, password)).fetchone()
 
-        # If authentication fails, render the login page again
-    return render_template('RestaurantDashboard.html')
+    if result:
+        session['username'] = username
+        cursor.close()
+        connection.close()
+        return redirect(url_for('dashboard'))
+    else:
+        cursor.close()
+        connection.close()
+        return render_template('login.html', error="Invalid Details")
         
 
 @app.route('/dashboard')
 def dashboard():
-    if session['username']:
-        user = User.query.filter_by(email=session['email']).first()
-        return render_template('RestaurantDashboard.html', user=user)
-    return redirect(url_for('index'))
+    # Check if the user is logged in
+    if 'username' in session:
+        username = session['username']
+
+        application_id = 'a385e141-b8ab-4b78-b3b6-34c05afede0b'
+        tenant_id = '94294eba-fc5c-4c48-a7da-75a76add95ab'
+        application_secret = 'dd8fff64-ca03-4af8-8909-43d89cf2985d'
+        workspace_id = 'e69c9f15-b04d-47b5-a808-e21e346ff958'
+        report_id = 'c1e42270-6277-4fb5-af45-ac7b4c9b5855'
+
+        token_url = f'https://login.microsoftonline.com/{tenant_id}/oauth2/token'
+        token_data = {
+            'grant_type': 'client_credentials',
+            'client_id': application_id,
+            'client_secret': application_secret,
+            'resource': 'https://graph.microsoft.com',
+        }
+
+        # Debugging: Print the token response
+        token_response = requests.post(token_url, data=token_data)
+        print("Token Response:", token_response.json())
+
+        access_token = token_response.json().get('access_token')
+        try:
+            report = Report(report_id, workspace_id, token=access_token)
+            embed_token = report.get_embed_token()
+
+            print(username, embed_token, access_token)
+
+            return render_template('RestaurantDashboard.html', username=username, embed_token=embed_token)
+        except Exception as ex:
+            print("Error: ", str(ex))
+            app.logger.exception('Error in dashboard')
+            return render_template('Error.html', error_message=str(ex)), 500
+    else:
+        # Redirect to the login page if not logged in
+        return redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
