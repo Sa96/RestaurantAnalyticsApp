@@ -119,9 +119,10 @@ def dashboard():
             report = Report(report_id, workspace_id, token=access_token)
             embed_token = report.get_embed_token()
 
-            print(username, embed_token, access_token)
+            embed_url = report.embed_url
+            print(username, embed_token, access_token,embed_url)
 
-            return render_template('RestaurantDashboard.html', username=username, embed_token=embed_token)
+            return render_template('RestaurantDashboard.html', username=username, embed_token=embed_token, embed_url=embed_url)
         except Exception as ex:
             print("Error: ", str(ex))
             app.logger.exception('Error in dashboard')
